@@ -18,7 +18,7 @@ parser.add_argument("--artifact-id", dest="artifact", help="Artifact ID")
 def download_artifact(token, artifact_id, repo):
     headers = {"Authorization": f"Bearer {token}"}
     timeout = 10  # Set the timeout value in seconds
-    r = requests.get(f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}", headers=headers, timeout=timeout)
+    r = requests.get(f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}/zip", headers=headers, timeout=timeout)
     print(r.json())
 
 if __name__ == "__main__":
