@@ -35,8 +35,8 @@ jobs:
       #     java-version: 17
       #     distribution: 'corrretto'
       
-      # - name: Run Designite Java
-      #   uses: actions/checkout@v4
+      - name: Run Designite Java
+        uses: actions/checkout@v4
         
       # - run: |
       #     java --version
