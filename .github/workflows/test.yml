@@ -39,8 +39,8 @@ jobs:
         uses: actions/checkout@v4
         
       - run: |
-          - java --version
-          - ls -a
+          java --version
+          ls -a
 #          - mkdir -p /tmp/Desingnite_Output_${{ github.sha }}
 #          - ls -a /tmp/
 #          - java -jar ./.github/DesigniteJava.jar -i ./ -o /tmp/Desingnite_Output_${{ github.sha }} -d
