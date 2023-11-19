@@ -33,6 +33,15 @@ inputs:
   github-token:
     description: 'GitHub Token'
     required: true
+  artifact-id:
+    description: 'Artifact ID'
+    required: true
+  username:
+    description: 'Username'
+    required: true
+  repo-name:
+    description: 'Repository Name'
+    required: true
 outputs:
   time: # id of output
     description: 'The time we greeted you'
@@ -41,3 +50,6 @@ runs:
   image: 'Dockerfile'
   args:
     - --token=${{ inputs.github-token }}
+    - --artifact-id=${{ inputs.artifact-id }}
+    - --username=${{ inputs.username }}
+    - --repo-name=${{ inputs.repo-name }}

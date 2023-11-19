@@ -8,6 +8,8 @@ COPY . .
 
 RUN pip install -r requirements.txt
 
+RUN ls -a
+
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
 ENTRYPOINT ["python", "action_cli.py"]

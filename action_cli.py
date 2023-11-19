@@ -12,9 +12,9 @@ import requests
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--token", dest="token", help="API token")
-parser.add_argument("--user", dest="user", help="User name")
-parser.add_argument("--repo", dest="repo", help="Repo name")
-parser.add_argument("--artifact", dest="artifact", help="Artifact ID")
+parser.add_argument("--username", dest="user", help="User name")
+parser.add_argument("--repo-name", dest="repo", help="Repo name")
+parser.add_argument("--artifact-id", dest="artifact", help="Artifact ID")
 
 def download_artifact(token, artifact_id, user, repo):
     headers = {"Authorization": f"Bearer {token}"}
