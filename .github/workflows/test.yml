@@ -40,8 +40,11 @@ jobs:
         
       - run: |
           java --version
-          ls -a
           java -jar ./.github/DesigniteJava.jar -i ./ -o /tmp/Desingnite_Output_${{ github.sha }} -d
           mkdir -p /tmp/Desingnite_Output_${{ github.sha }}
-          ls -a /tmp/
-    
+      
+      - name: Archive Designite results
+        uses: actions/upload-artifact@v3
+        with:
+          name: designite-output
+          path: /tmp/Desingnite_Output_${{ github.sha }}
