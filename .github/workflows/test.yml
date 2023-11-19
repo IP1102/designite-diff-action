@@ -48,8 +48,8 @@ jobs:
       #     name: designite-output-${{ github.sha }}
       #     path: /tmp/Desingnite_Output_${{ github.sha }}
 
-    - name: Test Action
-      uses: ./
-      with:
-        who-to-greet: 'Mona the Octocat'
+      - name: Test Action
+        uses: ./
+        with:
+          who-to-greet: 'Mona the Octocat'
       
