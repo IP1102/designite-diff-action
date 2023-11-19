@@ -18,8 +18,9 @@ parser.add_argument("--run-id", dest="run_id", help="Artifact ID")
 def download_artifact(token, run_id, repo):
     headers = {"Authorization": f"Bearer {token}"}
     timeout = 10  # Set the timeout value in seconds
-
-    r = requests.get(f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts", headers=headers, timeout=timeout)
+    url = f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts"
+    print(url)
+    r = requests.get(url, headers=headers, timeout=timeout)
     print(r.json())
     artifact_id = r.json()["artifacts"][0]["id"]
     r = requests.get(f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}/zip", headers=headers, timeout=timeout)
