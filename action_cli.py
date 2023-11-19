@@ -20,6 +20,7 @@ def download_artifact(token, run_id, repo):
     timeout = 10  # Set the timeout value in seconds
 
     r = requests.get(f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts", headers=headers, timeout=timeout)
+    print(r.json())
     artifact_id = r.json()["artifacts"][0]["id"]
     r = requests.get(f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}/zip", headers=headers, timeout=timeout)
     print(r.json())
