@@ -36,9 +36,6 @@ inputs:
   artifact-id:
     description: 'Artifact ID'
     required: true
-  username:
-    description: 'Username'
-    required: true
   repo-name:
     description: 'Repository Name'
     required: true
@@ -51,5 +48,4 @@ runs:
   args:
     - --token=${{ inputs.github-token }}
     - --artifact-id=${{ inputs.artifact-id }}
-    - --username=${{ inputs.username }}
     - --repo-name=${{ inputs.repo-name }}
