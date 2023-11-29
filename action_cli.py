@@ -1,19 +1,12 @@
-# import typer
-
-
-# def main(api_token: str, vcs: str = "github"):
-#     print(vcs)
-
-# if __name__=="__main__":
-#     typer.run(main)
-
 import argparse
 import requests
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--token", dest="token", help="API token")
 parser.add_argument("--repo-name", dest="repo", help="Repo name")
-parser.add_argument("--run-id", dest="run_id", help="Artifact ID")
+# parser.add_argument("--run-id", dest="run_id", help="Artifact ID")
+parser.add_argument("--designite-output", dest="designite_output", help="Designite Output")
 
 def download_artifact(token, run_id, repo):
     headers = {"Authorization": f"Bearer {token}"}
@@ -26,7 +19,14 @@ def download_artifact(token, run_id, repo):
     r = requests.get(f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}/zip", headers=headers, timeout=timeout)
     print(r.json())
 
+def validate(token, designite_output, repo):
+    print(os.listdir(designite_output))
+
+
+
 if __name__ == "__main__":
     args = parser.parse_args()
-    download_artifact(args.token, args.run_id, args.repo)
+    # download_artifact(args.token, args.run_id, args.repo)
+    validate(args.token, args.designite_output, args.repo)
+
     

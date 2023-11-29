@@ -33,8 +33,8 @@ inputs:
   github-token:
     description: 'GitHub Token'
     required: true
-  run-id:
-    description: 'Run ID'
+  designite-output:
+    description: 'Designite Output Path'
     required: true
   repo-name:
     description: 'Repository Name'
@@ -47,5 +47,5 @@ runs:
   image: 'Dockerfile'
   args:
     - --token=${{ inputs.github-token }}
-    - --run-id=${{ inputs.run-id }}
+    - --designite-output=${{ inputs.designite-output }}
     - --repo-name=${{ inputs.repo-name }}
