@@ -49,3 +49,4 @@ runs:
     - --token=${{ inputs.github-token }}
     - --designite-output=${{ inputs.designite-output }}
     - --repo-name=${{ inputs.repo-name }}
+  options: --mount type=bind,source=/tmp,target=/tmp
