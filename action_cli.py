@@ -20,7 +20,9 @@ def download_artifact(token, run_id, repo):
     print(r.json())
 
 def validate(token, designite_output, repo):
-    print(os.listdir(os.getcwd()))
+
+
+    print(os.listdir())
     print(os.listdir("/tmp/"))
     print(os.listdir(designite_output))
 
