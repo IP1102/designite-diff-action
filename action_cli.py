@@ -1,6 +1,7 @@
 import argparse
 import requests
 import os
+import zipfile
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--token", dest="token", help="API token")
@@ -41,6 +42,11 @@ def validate(token, designite_output, repo):
                 # Save the downloaded artifact to a local file
                 with open(f'{designite_output}.zip', 'wb') as f:
                     f.write(r.content)
+
+                # Extract the downloaded artifact
+                with zipfile.ZipFile(f'{designite_output}.zip', 'r') as zip_ref:
+                    zip_ref.extractall()
+                
                 print(f"Artifact '{designite_output}' downloaded successfully.")
             else:
                 print(f"Failed to download artifact '{designite_output}'.")            
