@@ -45,11 +45,10 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  container:
-    volumes:
-      - /tmp:/tmp  
+  services:
+    - name: docker
   args:
     - --token=${{ inputs.github-token }}
     - --designite-output=${{ inputs.designite-output }}
     - --repo-name=${{ inputs.repo-name }}
-  options: --mount type=bind,source=/tmp,target=/tmp
+  options: --volume /tmp:/tmp
