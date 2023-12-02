@@ -25,6 +25,12 @@ def validate(token, designite_output, repo):
     print(f"Current Directory = {os.getcwd()}")
     print(os.listdir())
     print(os.listdir("/"))
+    headers = {"Authorization": f"Bearer {token}"}
+    timeout = 10  # Set the timeout value in seconds
+    url = f"https://api.github.com/repos/{repo}/actions/artifacts"
+    print(url)
+    r = requests.get(url, headers=headers, timeout=timeout)
+    print(r.json())
     # print(os.listdir(designite_output))
 
 
