@@ -21,10 +21,10 @@ def download_artifact(token, run_id, repo):
 
 def validate(token, designite_output, repo):
 
-
+    print("Validating")
     print(os.listdir())
-    print(os.listdir("/tmp/"))
-    print(os.listdir(designite_output))
+    print(os.listdir("/"))
+    # print(os.listdir(designite_output))
 
 
 

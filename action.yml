@@ -49,4 +49,3 @@ runs:
     - --token=${{ inputs.github-token }}
     - --designite-output=${{ inputs.designite-output }}
     - --repo-name=${{ inputs.repo-name }}
-    - -v /tmp:/tmp
