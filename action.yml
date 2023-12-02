@@ -45,6 +45,9 @@ outputs:
 runs:
   using: 'docker'
   image: 'Dockerfile'
+  container:
+    volumes:
+      - /tmp:/tmp  
   args:
     - --token=${{ inputs.github-token }}
     - --designite-output=${{ inputs.designite-output }}
