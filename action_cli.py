@@ -35,7 +35,7 @@ def validate(token, designite_output, repo):
         if artifacts["name"] == designite_output:
             artifact_id = artifacts["id"]
             print(artifact_id)
-            r = requests.get(f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}/zip", headers=headers, timeout=timeout)
+            r = requests.get(artifacts["archive_download_url"], headers=headers, timeout=timeout)
             print("Extracting")
             print(os.listdir())
             break
