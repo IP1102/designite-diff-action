@@ -36,7 +36,6 @@ def validate(token, designite_output, repo):
             artifact_id = artifacts["id"]
             print(artifact_id)
             r = requests.get(f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}/zip", headers=headers, timeout=timeout)
-            print(r.json())
             print("Extracting")
             print(os.listdir())
             break
