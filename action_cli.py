@@ -22,6 +22,7 @@ def download_artifact(token, run_id, repo):
 def validate(token, designite_output, repo):
 
     print("Validating")
+    print(f"Current Directory = {os.getcwd()}")
     print(os.listdir())
     print(os.listdir("/"))
     # print(os.listdir(designite_output))
