@@ -43,9 +43,10 @@ def validate(token, designite_output, repo):
                 with open(f'{designite_output}.zip', 'wb') as f:
                     f.write(r.content)
 
+                os.makedirs(designite_output, exist_ok=True)
                 # Extract the downloaded artifact
                 with zipfile.ZipFile(f'{designite_output}.zip', 'r') as zip_ref:
-                    zip_ref.extractall(os.makedirs(designite_output, exist_ok=True))
+                    zip_ref.extractall(designite_output)
                 
                 print(f"Artifact '{designite_output}' downloaded successfully.")
             else:
