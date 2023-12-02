@@ -36,6 +36,7 @@ def validate(token, designite_output, repo):
             artifact_id = artifacts["id"]
             print(artifact_id)
             r = requests.get(artifacts["archive_download_url"], headers=headers, timeout=timeout)
+            print(r)
             print("Extracting")
             print(os.listdir())
             break
