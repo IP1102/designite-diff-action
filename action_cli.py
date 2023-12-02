@@ -37,6 +37,13 @@ def validate(token, designite_output, repo):
             print(artifact_id)
             r = requests.get(artifacts["archive_download_url"], headers=headers, timeout=timeout)
             print(r.headers)
+            if r.status_code == 200:
+                # Save the downloaded artifact to a local file
+                with open(f'{designite_output}.zip', 'wb') as f:
+                    f.write(r.content)
+                print(f"Artifact '{designite_output}' downloaded successfully.")
+            else:
+                print(f"Failed to download artifact '{designite_output}'.")            
             print("Extracting")
             print(os.listdir())
             break
