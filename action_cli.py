@@ -2,6 +2,7 @@ import argparse
 import requests
 import os
 import zipfile
+from designiteutil.designite_diff import process
 
 GITHUB_API_URL = "https://api.github.com"
 
@@ -36,10 +37,9 @@ def download_artifact(artifacts, designite_output_old, token):
 
 def get_new_smells(designite_output_old, designite_output_new):
     '''Get the new smells from the current run'''
-    import subprocess
-    print(designite_output_new)
-    print(designite_output_old)
-    print(subprocess.run(["DesigniteUtil", "--help"], capture_output=True, check=True))
+    process(designite_output_old, designite_output_new, "new_smells.json")
+    with open("new_smells.json", "r") as f:
+        print(f.read())
 
 
 def main(token, designite_output_old, designite_output_new, repo):
