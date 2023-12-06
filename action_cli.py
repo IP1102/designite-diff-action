@@ -17,7 +17,7 @@ def download_artifact(artifacts, designite_output, token):
     '''Download an artifact from a given artifact name'''
     
     for artifact in artifacts:
-        if artifacts["name"] == designite_output:
+        if artifact["name"] == designite_output:
             resp = api_request(artifact["archive_download_url"], token)
             if resp.status_code != 200:
                 print(f"Failed to download artifact '{artifact['name']}'.")
