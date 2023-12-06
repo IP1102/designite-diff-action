@@ -33,9 +33,12 @@ inputs:
   github-token:
     description: 'GitHub Token'
     required: true
-  designite-output:
-    description: 'Designite Output Path'
+  designite-output-old:
+    description: 'Designite Output Name Old'
     required: true
+  designite-output-new:
+    description: 'Designite Output Name New'
+    required: true    
   repo-name:
     description: 'Repository Name'
     required: true
@@ -47,5 +50,6 @@ runs:
   image: 'Dockerfile'
   args:
     - --token=${{ inputs.github-token }}
-    - --designite-output=${{ inputs.designite-output }}
+    - --designite-output-old=${{ inputs.designite-output-old }}
+    - --designite-output-new=${{ inputs.designite-output-new }}
     - --repo-name=${{ inputs.repo-name }}

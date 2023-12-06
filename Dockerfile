@@ -7,8 +7,11 @@ FROM python:3.10-alpine
 # COPY . .
 COPY action_cli.py /action_cli.py
 COPY requirements.txt /requirements.txt
+COPY Designite-Util-0.1.tar.gz /Designite-Util-0.1.tar.gz
 
 RUN pip install -r requirements.txt
+
+RUN pip install Designite-Util-0.1.tar.gz
 
 RUN ls -a
 
