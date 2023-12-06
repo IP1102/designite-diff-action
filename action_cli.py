@@ -37,11 +37,13 @@ def download_artifact(artifacts, designite_output, token):
 
 def main(token, designite_output, repo):
     '''Download an artifact from a given run ID.'''
-    artifact_resp = api_request(f"{GITHUB_API_URL}/repos/{repo}/actions/artifacts", token, params={"per_page": 100}).json()
+    artifact_resp = api_request(f"{GITHUB_API_URL}/repos/{repo}/actions/artifacts", token, params={"per_page": 100})
 
     if artifact_resp.status_code != 200:
         print(f"Failed to fetch artifacts for repository - {repo}.")
         return
+    
+    artifact_resp = artifact_resp.json()
     
     if artifact_resp.get("total_count", 0) == 0:
         print(f"No artifacts found for this repository - {repo}.")
