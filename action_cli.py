@@ -3,65 +3,65 @@ import requests
 import os
 import zipfile
 
-parser = argparse.ArgumentParser()
-parser.add_argument("--token", dest="token", help="API token")
-parser.add_argument("--repo-name", dest="repo", help="Repo name")
-# parser.add_argument("--run-id", dest="run_id", help="Artifact ID")
-parser.add_argument("--designite-output", dest="designite_output", help="Designite Output")
+GITHUB_API_URL = "https://api.github.com"
 
-def download_artifact(token, run_id, repo):
+def api_request(url, token, method="GET", data=None, params=None):
+    '''Make an API request to GitHub.'''
+
     headers = {"Authorization": f"Bearer {token}"}
-    timeout = 10  # Set the timeout value in seconds
-    url = f"https://api.github.com/repos/{repo}/actions/runs/{run_id}/artifacts"
-    print(url)
-    r = requests.get(url, headers=headers, timeout=timeout)
-    print(r.json())
-    artifact_id = r.json()["artifacts"][0]["id"]
-    r = requests.get(f"https://api.github.com/repos/{repo}/actions/artifacts/{artifact_id}/zip", headers=headers, timeout=timeout)
-    print(r.json())
+    timeout = 10
+    response = requests.request(method, url, headers=headers, timeout=timeout, data=data, params=params)
+    return response
 
-def validate(token, designite_output, repo):
-
-    print("Validating")
-    print(f"Current Directory = {os.getcwd()}")
-    print(os.listdir())
-    print(os.listdir("/"))
-    headers = {"Authorization": f"Bearer {token}"}
-    timeout = 10  # Set the timeout value in seconds
-    url = f"https://api.github.com/repos/{repo}/actions/artifacts"
-    print(url)
-    r = requests.get(url, headers=headers, timeout=timeout)
-    print(r.json())
-    for artifacts in r.json()["artifacts"]:
-        if artifacts["name"] == designite_output:
-            artifact_id = artifacts["id"]
-            print(artifact_id)
-            r = requests.get(artifacts["archive_download_url"], headers=headers, timeout=timeout)
-            print(r.headers)
-            if r.status_code == 200:
-                # Save the downloaded artifact to a local file
-                with open(f'{designite_output}.zip', 'wb') as f:
-                    f.write(r.content)
-
-                os.makedirs(designite_output, exist_ok=True)
-                # Extract the downloaded artifact
-                with zipfile.ZipFile(f'{designite_output}.zip', 'r') as zip_ref:
-                    zip_ref.extractall(designite_output)
-                
-                print(f"Artifact '{designite_output}' downloaded successfully.")
-            else:
-                print(f"Failed to download artifact '{designite_output}'.")            
-            print("Extracting")
-            print(os.listdir())
-            break
+def download_artifact(artifacts, designite_output, token):
+    '''Download an artifact from a given artifact name'''
     
-    # print(os.listdir(designite_output))
+    for artifact in artifacts:
+        if artifacts["name"] == designite_output:
+            resp = api_request(artifact["archive_download_url"], token)
+            if resp.status_code != 200:
+                print(f"Failed to download artifact '{artifact['name']}'.")
+                return False
+
+            # Save the downloaded artifact to a local file - This saves in the current repository checkout directory
+            with open(f'{artifact["name"]}.zip', 'wb') as f:
+                f.write(resp.content)
+
+            os.makedirs(artifact["name"], exist_ok=True)
+            # Extract the downloaded artifact
+            with zipfile.ZipFile(f'{artifact["name"]}.zip', 'r') as zip_ref:
+                zip_ref.extractall(artifact["name"])
+        break
+    return True
+
+
+def main(token, designite_output, repo):
+    '''Download an artifact from a given run ID.'''
+    artifact_resp = api_request(f"{GITHUB_API_URL}/repos/{repo}/actions/artifacts", token, params={"per_page": 100}).json()
+
+    if artifact_resp.status_code != 200:
+        print(f"Failed to fetch artifacts for repository - {repo}.")
+        return
+    
+    if artifact_resp.get("total_count", 0) == 0:
+        print(f"No artifacts found for this repository - {repo}.")
+        return
+
+    if not download_artifact(artifact_resp["artifacts"], designite_output, token):
+        print(f"Failed to download artifact for repository - {repo}.")
+        return
+    
+    print(f"Artifact '{designite_output}' downloaded successfully.")
 
 
 
 if __name__ == "__main__":
-    args = parser.parse_args()
-    # download_artifact(args.token, args.run_id, args.repo)
-    validate(args.token, args.designite_output, args.repo)
 
-    
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--token", dest="token", help="API token")
+    parser.add_argument("--repo-name", dest="repo", help="Repo name")
+    parser.add_argument("--designite-output", dest="designite_output", help="Designite Output")    
+    args = parser.parse_args()
+
+    # download_artifact(args.token, args.run_id, args.repo)
+    main(args.token, args.designite_output, args.repo)
